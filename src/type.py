@@ -2,16 +2,17 @@ from pynput import keyboard
 import time
 import csv
 
-
 start = time.time()
 pressed = {}
 press = [[]]
 held = []
+password = []
 def on_press(key): 
     if(key==keyboard.Key.esc):
         return False
     if key not in pressed: # Key was never pressed before
         pressed[key] = 0
+        password.append(key)
     
     if pressed[key]==0: # Same logic
         pressed[key] = time.time()
@@ -40,3 +41,4 @@ with open("press.csv", 'w', newline='') as csvfile:
         for j in reversed(i):
             row.append((j-i[0])/(i[3]-i[0]))
         writer.writerow(reversed(row))
+    print(password)
