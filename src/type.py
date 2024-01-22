@@ -49,7 +49,7 @@ with open("tmp/press.csv", 'w', newline='') as csvfile:
     #         row.append((j-press[i][0])/(press[i][3]-press[i][0]))
     #     writer.writerow(reversed(row))
 
-    #not normalized02270227
+    #not normalized
     for i in range(len(press)):
         if(len(press[i])!=4):break
         row = []
