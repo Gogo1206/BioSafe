@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import random
 
 files = glob.glob('tmp\\data\\*.csv')
-labels = ["0308", "0816", "1206", "3221", "7958", "mom0227", "mom1206"]
+labels = ["gogo"]
 start = [[],[],[],[],[],[],[],[]]
 end = [[],[],[],[],[],[],[],[]]
 for filename in files:

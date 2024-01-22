@@ -15,7 +15,7 @@ def on_press(key):
         pressed[key] = 0
     
     if pressed[key]==0: # Same logic
-        if(len(password)!=4):password.append(key)#
+        if(len(password)!=4):password.append(key)
         pressed[key] = time.time()
         print('Key %s pressed at ' % key, time.time()) 
         press.append([time.time()-start]) if len(press[len(press)-1])==4 else press[len(press)-1].append(time.time()-start)
