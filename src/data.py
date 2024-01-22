@@ -29,10 +29,28 @@ for filename in files:
     with open("tmp/data/others.csv", 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(["press1", "press2", "press3", "press4", "delay1", "delay2", "delay3", "delay4"])
+
+        #normalized
+        # for j in range(100):
+        #     # num = random.uniform(0, q1[1]) if random.randint(0,1) == 1 else random.uniform(q3[1], q1[2])
+        #     # num2 = random.uniform(num, q1[2]) if random.randint(0,1) == 1 else random.uniform(q3[2],1)
+        #     num = random.uniform(max(0,q1[1]-(q3[1]-q1[1])), q1[1]) if random.randint(0,1) == 1 else random.uniform(q3[1], q1[2])
+        #     num2 = random.uniform(num, q1[2]) if random.randint(0,1) == 1 else random.uniform(q3[2],q3[2]+(q3[2]-q1[2]))
+        #     row = [0, num, num2, 1]
+        #     # plt.plot([1,2,3,4],[q1[i] for i in range(4)], color='black')
+        #     # plt.plot([1,2,3,4],[q3[i] for i in range(4)], color='black')
+        #     # plt.plot([1,2,3,4],[i for i in row], linestyle='dashed')
+        #     # plt.show()
+        #     delays = [(random.uniform(0.05, q1[i]) if random.randint(0,1) == 1 else random.uniform(q3[i],0.20)) for i in range(4,8)]
+        #     writer.writerow(row+delays)
+
+        #not normalized
         for j in range(50):
-            num = random.uniform(0, q1[1]) if random.randint(0,1) == 1 else random.uniform(q3[1], q1[2])
-            num2 = random.uniform(num, q1[2]) if random.randint(0,1) == 1 else random.uniform(q3[2],1)
-            row = [0, num, num2, 1]
+            num1 = 0
+            num2 = random.uniform(max(0,q1[1]-(q3[1]-q1[1])), q1[1]) if random.randint(0,1) == 1 else random.uniform(q3[1], q1[2])
+            num3 = random.uniform(num2, q1[2]) if random.randint(0,1) == 1 else random.uniform(q3[2],q1[3])
+            num4 = random.uniform(num3, q1[3]) if random.randint(0,1) == 1 else random.uniform(q3[3],q3[3]+(q3[3]-q3[1]))
+            row = [num1, num2, num3, num4]
             # plt.plot([1,2,3,4],[q1[i] for i in range(4)], color='black')
             # plt.plot([1,2,3,4],[q3[i] for i in range(4)], color='black')
             # plt.plot([1,2,3,4],[i for i in row], linestyle='dashed')

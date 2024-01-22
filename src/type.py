@@ -38,22 +38,25 @@ listener.join()
 with open("tmp/press.csv", 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(["press1", "press2", "press3", "press4", "delay1", "delay2", "delay3", "delay4"])
-    for i in range(len(press)):
-        if(len(press[i])!=4):break
-        row = []
-        for j in reversed(held[i]):
-            row.append(j)
-        for j in reversed(press[i]):
-            row.append((j-press[i][0])/(press[i][3]-press[i][0]))
-        writer.writerow(reversed(row))
 
+    #normalize
     # for i in range(len(press)):
     #     if(len(press[i])!=4):break
     #     row = []
-    #     for j in held[i]:
+    #     for j in reversed(held[i]):
     #         row.append(j)
-    #     start = press[i][0]
-    #     for j in press[i]:
-    #         row.append(j-start)
-    #     writer.writerow(row)
+    #     for j in reversed(press[i]):
+    #         row.append((j-press[i][0])/(press[i][3]-press[i][0]))
+    #     writer.writerow(reversed(row))
+
+    #not normalized02270227
+    for i in range(len(press)):
+        if(len(press[i])!=4):break
+        row = []
+        start = press[i][0]
+        for j in press[i]:
+            row.append(j-start)
+        for j in held[i]:
+            row.append(j)
+        writer.writerow(row)
     print(password)

@@ -19,12 +19,13 @@ def plot_confusion_matrix(cm, classes=None, title='Confusion matrix'):
     plt.show()
 
 files = glob.glob('tmp\\data\\*.csv')
-labels = ["0308", "0816", "1206", "3221", "7958", "mom0227", "mom1206", "others"]
+labels = []
 x = []
 y = []
 for filename in files:
     data = []
     with open(filename, newline='') as csvfile:
+        labels.append(filename[9:-4])
         reader = list(csv.reader(csvfile, delimiter=','))
         title = reader.pop(0)
         # print(reader)
@@ -37,7 +38,7 @@ for filename in files:
 
 rf_train, rf_test, train_label, test_label = train_test_split(x, y, test_size=0.2, random_state=50)
 
-rf_model = RandomForestClassifier(n_estimators=50, criterion='entropy')
+rf_model = RandomForestClassifier(n_estimators=100, criterion='entropy')
 rf_model.fit(rf_train, train_label)
 prediction_test = rf_model.predict(X=rf_test)
 
@@ -46,15 +47,18 @@ print("Training Accuracy is: ", rf_model.score(rf_train, train_label))
 # Accuracy on Train
 print("Testing Accuracy is: ", rf_model.score(rf_test, test_label))
 
-cm = confusion_matrix(test_label, prediction_test)
-cm_norm = cm/cm.sum(axis=1)[:, np.newaxis]
-plt.figure()
-plot_confusion_matrix(cm_norm, classes=rf_model.classes_)
+#confusion matrix
+# cm = confusion_matrix(test_label, prediction_test)
+# cm_norm = cm/cm.sum(axis=1)[:, np.newaxis]
+# plt.figure()
+# plot_confusion_matrix(cm_norm, classes=rf_model.classes_)
 
-print(rf_model.predict(X=[[0.0,0.1558608311962856,0.425157810480815,1.0,0.13311290740966797,0.08839607238769531,0.09984540939331055,0.07083892822265625],[0.0,0.3026376512111216,0.5411933058370821,1.0,0.14457488059997559,0.1306898593902588,0.12643098831176758,0.08564424514770508]]))
+
+prediction = rf_model.predict(X=[[0.0,0.08102822303771973,0.1749711036682129,0.3909306526184082,0.10950136184692383,0.09694719314575195,0.09722113609313965,0.07033276557922363],[0.0,0.4708571434020996,1.075922966003418,1.7906007766723633,0.1363675594329834,0.11570262908935547,0.13919687271118164,0.13847613334655762],[0.0,0.31091880798339844,0.4660007953643799,0.6013302803039551,0.10136079788208008,0.07022714614868164,0.08678197860717773,0.07829093933105469],[0.0,0.4898681640625,0.8029575347900391,1.273542881011963,0.1506366729736328,0.18001031875610352,0.14185094833374023,0.15266799926757812]])
+for i in prediction:
+    print(labels[i])
 
 # Tunning Random Forest
-
 # from itertools import product
 # n_estimators = [50, 100, 25]
 # criterion = ['gini', 'log_loss', 'entropy']
@@ -70,6 +74,7 @@ print(rf_model.predict(X=[[0.0,0.1558608311962856,0.425157810480815,1.0,0.133112
 #     # plt.figure()
 #     # plot_confusion_matrix(cm_norm, classes=rf.classes_, title='Confusion matrix accuracy on test set with max features = {} and max_depth = {}: {:.3f}'.format(f, d, accuracy_score(test_label,prediction_test)))
 
+#drawing tree
 # from sklearn import tree
 # for tree_in_forest in rf_model.estimators_:
 #     tree.plot_tree(tree_in_forest)
