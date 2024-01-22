@@ -19,10 +19,11 @@ def plot_confusion_matrix(cm, classes=None, title='Confusion matrix'):
     plt.show()
 
 files = glob.glob('tmp\\data\\*.csv')
-labels = ["0308", "0816", "1206", "3221", "7958", "mom0227", "mom1206", "others"]
+labels = []
 x = []
 y = []
 for filename in files:
+    labels.append(filename[9:-4])
     data = []
     with open(filename, newline='') as csvfile:
         reader = list(csv.reader(csvfile, delimiter=','))
@@ -51,7 +52,7 @@ cm_norm = cm/cm.sum(axis=1)[:, np.newaxis]
 plt.figure()
 plot_confusion_matrix(cm_norm, classes=rf_model.classes_)
 
-print(rf_model.predict(X=[[0.0,0.1558608311962856,0.425157810480815,1.0,0.13311290740966797,0.08839607238769531,0.09984540939331055,0.07083892822265625],[0.0,0.3026376512111216,0.5411933058370821,1.0,0.14457488059997559,0.1306898593902588,0.12643098831176758,0.08564424514770508]]))
+print(rf_model.predict(X=[]))
 
 # Tunning Random Forest
 
