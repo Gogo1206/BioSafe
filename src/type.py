@@ -49,7 +49,7 @@ with open("tmp/press.csv", 'w', newline='') as csvfile:
     #         row.append((j-press[i][0])/(press[i][3]-press[i][0]))
     #     writer.writerow(reversed(row))
 
-    #not normalized
+    #not normalized08050805
     for i in range(len(press)):
         if(len(press[i])!=4):break
         row = []
@@ -59,4 +59,4 @@ with open("tmp/press.csv", 'w', newline='') as csvfile:
         for j in held[i]:
             row.append(j)
         writer.writerow(row)
-    print(password)
+    # print(password)

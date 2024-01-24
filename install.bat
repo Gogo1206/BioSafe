@@ -1,0 +1,9 @@
+pip install csv
+pip install matplotlib
+pip install numpy
+pip install glob
+pip install scikit-learn
+pip install seaborn
+pip install random
+pip install pynput
+pip install time
