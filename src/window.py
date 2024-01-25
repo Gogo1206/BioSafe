@@ -7,7 +7,7 @@ import tkinter as tk
 root=tk.Tk()
  
 # setting the windows size
-# root.geometry("600x400")
+root.geometry("600x400")
 
 root.grid_rowconfigure(3, weight=1)
 root.grid_columnconfigure(3, weight=1)

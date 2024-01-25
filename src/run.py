@@ -14,7 +14,7 @@ held = [[]]
 password = []
 counter = 0
 def on_press(key): 
-    if(key==keyboard.Key.esc):
+    if(key==keyboard.Key.enter):
         return False
     if key not in pressed: # Key was never pressed before
         pressed[key] = 0
@@ -23,14 +23,14 @@ def on_press(key):
         if(len(password)!=4):
             password.append(key)
         pressed[key] = time.time()
-        # print(key)
+        print("*",end="")
         # print('Key %s pressed at ' % key, time.time()) 
         press[len(press)-1].append(time.time()-start)
         if(len(press[-1])==4):
             global counter
             counter = counter+1
             press.append([])
-            print("Count:", counter)
+            print("\nCount:", counter)
 
 def on_release(key):  # Same logic
     # print('Key %s released at' % key, time.time())
@@ -44,7 +44,7 @@ listener = keyboard.Listener(on_press=on_press, on_release=on_release)
 listener.start()
 listener.join()
 
-with open("tmp\\run\\user.csv", 'w', newline='') as csvfile:
+with open("tmp\\run\\correct user.csv", 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(["press1", "press2", "press3", "press4", "delay1", "delay2", "delay3", "delay4"])
 
@@ -64,7 +64,7 @@ files = glob.glob('tmp\\run\\*.csv')
 labels = ["user"]
 start = [[],[],[],[],[],[],[],[]]
 end = [[],[],[],[],[],[],[],[]]
-with open("tmp\\run\\others.csv", 'w', newline='') as csvfile:
+with open("tmp\\run\\others user.csv", 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(["press1", "press2", "press3", "press4", "delay1", "delay2", "delay3", "delay4"])
     for filename in files:
@@ -98,7 +98,7 @@ with open("tmp\\run\\others.csv", 'w', newline='') as csvfile:
             delays = [(random.uniform(0.05, q1[i]) if random.randint(0,1) == 1 else random.uniform(q3[i],0.20)) for i in range(4,8)]
             writer.writerow(row+delays)
 
-with open("tmp\\run\\ai.csv", 'w', newline='') as csvfile:
+with open("tmp\\run\\ai hacking.csv", 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(["press1", "press2", "press3", "press4", "delay1", "delay2", "delay3", "delay4"])
 
@@ -159,6 +159,8 @@ for filename in files:
 
 rf_train, rf_test, train_label, test_label = train_test_split(x, y, test_size=0.2, random_state=50)
 
+print("Training Random Forest Model...")
+
 rf_model = RandomForestClassifier(n_estimators=50, criterion='entropy')
 rf_model.fit(rf_train, train_label)
 prediction_test = rf_model.predict(X=rf_test)
@@ -173,42 +175,51 @@ print("Testing Accuracy is: ", rf_model.score(rf_test, test_label))
 # cm_norm = cm/cm.sum(axis=1)[:, np.newaxis]
 # plot_confusion_matrix(cm_norm, classes=rf_model.classes_)
 
-x = [[]]
-y = [[]]
-def predict(key): 
+x = []
+y = []
+def enter_predict(x, y):
+    row = []
+    start = x[0]
+    for i in x:
+        row.append(i-start)
+    for i in y:
+        row.append(i)
+    prediction = rf_model.predict(X=[row])
+    print(labels[prediction[0]],"detected")
+
+def on_press(key): 
     if(key==keyboard.Key.enter):
-        return False
+        print("AI Hacking")
+        for i in range(50):
+            print('\''+str(random.randint(0,9))+'\'', end=' ')
+        print()
+        for i in password:
+            print(i,end='')
+        print()
+        enter_predict([0,0,0,0],[0,0,0,0])
     if key not in pressed: # Key was never pressed before
         pressed[key] = 0
     
     if pressed[key]==0: # Same logic
-        if(len(password)!=4):password.append(key)
         pressed[key] = time.time()
         # print('Key %s pressed at ' % key, time.time()) 
-        x.append([time.time()-start]) if len(x[len(x)-1])==4 else x[-1].append(time.time()-start)
+        x.append(time.time()-start)
 
 
 def on_release(key):  # Same logic
     # print('Key %s released at' % key, time.time())
     # held.append(time.time()-pressed[key])
-    y.append([time.time()-pressed[key]]) if len(y[-1])==4 else y[-1].append(time.time()-pressed[key])
+    y.append(time.time()-pressed[key])
     pressed[key] = 0
+    if len(y)==4:
+        enter_predict(x, y)
+        x.clear()
+        y.clear()
 
-print("Please enter your 4 digit PIN:")
-listener = keyboard.Listener(on_press=predict, on_release=on_release)
+print("Try login with your 4 digit PIN:")
+listener = keyboard.Listener(on_press=on_press, on_release=on_release)
 listener.start()
 listener.join()
-
-for i in range(len(x)):
-    if(len(x[i])!=4):break
-    row = []
-    start = x[i][0]
-    for j in x[i]:
-        row.append(j-start)
-    for j in y[i]:
-        row.append(j)
-    prediction = rf_model.predict(X=[row])
-    print(labels[prediction[0]])
 
 # Tunning Random Forest
 # from itertools import product
