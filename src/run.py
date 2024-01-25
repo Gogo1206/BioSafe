@@ -59,9 +59,9 @@ with open("tmp\\run\\correct user.csv", 'w', newline='') as csvfile:
         writer.writerow(row)
     # print(password)
 
-
+print("Analyzing Data...")
 files = glob.glob('tmp\\run\\*.csv')
-labels = ["user"]
+labels = ["correct user"]
 start = [[],[],[],[],[],[],[],[]]
 end = [[],[],[],[],[],[],[],[]]
 with open("tmp\\run\\others user.csv", 'w', newline='') as csvfile:
@@ -97,7 +97,7 @@ with open("tmp\\run\\others user.csv", 'w', newline='') as csvfile:
             # plt.show()
             delays = [(random.uniform(0.05, q1[i]) if random.randint(0,1) == 1 else random.uniform(q3[i],0.20)) for i in range(4,8)]
             writer.writerow(row+delays)
-
+            
 with open("tmp\\run\\ai hacking.csv", 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(["press1", "press2", "press3", "press4", "delay1", "delay2", "delay3", "delay4"])
@@ -128,17 +128,18 @@ from sklearn.ensemble import RandomForestClassifier
 import seaborn as sns
 from sklearn.metrics import accuracy_score, confusion_matrix, r2_score
 
-def plot_confusion_matrix(cm, classes=None, title='Confusion matrix'):
-    """Plots a confusion matrix."""
-    if classes is not None:
-        sns.heatmap(cm, xticklabels=classes, yticklabels=classes, vmin=0., vmax=1., annot=False)
-    else:
-        sns.heatmap(cm, vmin=0., vmax=1.)
-    plt.title(title)
-    plt.ylabel('True label')
-    plt.xlabel('Predicted label')
-    plt.show()
+# def plot_confusion_matrix(cm, classes=None, title='Confusion matrix'):
+#     """Plots a confusion matrix."""
+#     if classes is not None:
+#         sns.heatmap(cm, xticklabels=classes, yticklabels=classes, vmin=0., vmax=1., annot=False)
+#     else:
+#         sns.heatmap(cm, vmin=0., vmax=1.)
+#     plt.title(title)
+#     plt.ylabel('True label')
+#     plt.xlabel('Predicted label')
+#     plt.show()
 
+print("Training Random Forest Model...")
 files = glob.glob('tmp\\run\\*.csv')
 labels = []
 x = []
@@ -159,7 +160,6 @@ for filename in files:
 
 rf_train, rf_test, train_label, test_label = train_test_split(x, y, test_size=0.2, random_state=50)
 
-print("Training Random Forest Model...")
 
 rf_model = RandomForestClassifier(n_estimators=50, criterion='entropy')
 rf_model.fit(rf_train, train_label)
