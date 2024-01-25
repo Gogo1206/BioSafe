@@ -12,28 +12,35 @@ pressed = {}
 press = [[]]
 held = [[]]
 password = []
+counter = 0
 def on_press(key): 
-    if(key==keyboard.Key.enter):
+    if(key==keyboard.Key.esc):
         return False
     if key not in pressed: # Key was never pressed before
         pressed[key] = 0
     
-    if pressed[key]==0: # Same logic
-        if(len(password)!=4):password.append(key)
+    if pressed[key]==0: # Same logic1206
+        if(len(password)!=4):
+            password.append(key)
         pressed[key] = time.time()
+        print(key,end='')
         # print('Key %s pressed at ' % key, time.time()) 
-        press.append([time.time()-start]) if len(press[len(press)-1])==4 else press[len(press)-1].append(time.time()-start)
+        press[len(press)-1].append(time.time()-start)
+        if(len(press[-1])==4):
+            global counter
+            counter = counter+1
+            press.append([])
+            print(counter)
 
 def on_release(key):  # Same logic
     # print('Key %s released at' % key, time.time())
-    # held.append(time.time()-pressed[key])
     held.append([time.time()-pressed[key]]) if len(held[-1])==4 else held[-1].append(time.time()-pressed[key])
     pressed[key] = 0
+    if(counter==10):
+        return False
 
-print("Please enter your 4 digit PIN for 10 times: (press enter when done)")
-listener = keyboard.Listener(
-    on_press=on_press,
-    on_release=on_release)
+print("Please enter your 4 digit PIN for 10 times:")
+listener = keyboard.Listener(on_press=on_press, on_release=on_release)
 listener.start()
 listener.join()
 

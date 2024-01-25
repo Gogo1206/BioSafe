@@ -13,7 +13,7 @@ def on_press(key):
         return False
     if key not in pressed: # Key was never pressed before
         pressed[key] = 0
-    
+
     if pressed[key]==0: # Same logic
         if(len(password)!=4):password.append(key)
         pressed[key] = time.time()
@@ -27,9 +27,7 @@ def on_release(key):  # Same logic
     pressed[key] = 0
 
 
-listener = keyboard.Listener(
-    on_press=on_press,
-    on_release=on_release)
+listener = keyboard.Listener(on_press=on_press, on_release=on_release)
 listener.start()
 listener.join()
 
