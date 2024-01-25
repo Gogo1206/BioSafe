@@ -23,14 +23,14 @@ def on_press(key):
         if(len(password)!=4):
             password.append(key)
         pressed[key] = time.time()
-        print(key,end='')
+        # print(key)
         # print('Key %s pressed at ' % key, time.time()) 
         press[len(press)-1].append(time.time()-start)
         if(len(press[-1])==4):
             global counter
             counter = counter+1
             press.append([])
-            print(counter)
+            print("Count:", counter)
 
 def on_release(key):  # Same logic
     # print('Key %s released at' % key, time.time())
@@ -194,10 +194,8 @@ def on_release(key):  # Same logic
     y.append([time.time()-pressed[key]]) if len(y[-1])==4 else y[-1].append(time.time()-pressed[key])
     pressed[key] = 0
 
-print("Please enter your 4 digit PIN: (press enter when done)")
-listener = keyboard.Listener(
-    on_press=predict,
-    on_release=on_release)
+print("Please enter your 4 digit PIN:")
+listener = keyboard.Listener(on_press=predict, on_release=on_release)
 listener.start()
 listener.join()
 

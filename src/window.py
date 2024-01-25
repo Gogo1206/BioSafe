@@ -7,7 +7,10 @@ import tkinter as tk
 root=tk.Tk()
  
 # setting the windows size
-root.geometry("600x400")
+# root.geometry("600x400")
+
+root.grid_rowconfigure(3, weight=1)
+root.grid_columnconfigure(3, weight=1)
   
 # declaring string variable
 # for storing name and password
@@ -22,9 +25,6 @@ def submit():
  
     name=name_var.get()
     password=passw_var.get()
-     
-    print("The name is : " + name)
-    print("The password is : " + password)
      
     name_var.set("")
     passw_var.set("")
