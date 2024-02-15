@@ -40,6 +40,7 @@ rf_train, rf_test, train_label, test_label = train_test_split(x, y, test_size=0.
 
 rf_model = RandomForestClassifier(n_estimators=100, criterion='entropy')
 rf_model.fit(rf_train, train_label)
+
 prediction_test = rf_model.predict(X=rf_test)
 
 # Accuracy on Test
@@ -52,28 +53,31 @@ print("Testing Accuracy is: ", rf_model.score(rf_test, test_label))
 # cm_norm = cm/cm.sum(axis=1)[:, np.newaxis]
 # plot_confusion_matrix(cm_norm, classes=rf_model.classes_)
 
-prediction = rf_model.predict(X=[[0.0,0.11696386337280273,0.2030794620513916,0.42325568199157715,0.18492698669433594,0.13570046424865723,0.11558413505554199,0.07843995094299316],[0.0,0.3345305919647217,0.4642355442047119,0.8526754379272461,0.09911227226257324,0.11582398414611816,0.12114119529724121,0.06845760345458984],[0,0,0,0,0,0,0,0]])
+prediction = rf_model.predict(X=[[0,0,0,0,0,0,0,0]])
 for i in prediction:
     print(labels[i])
 
-# Tunning Random Forest
+# # Tunning Random Forest
 # from itertools import product
 # n_estimators = [50, 100, 25]
 # criterion = ['gini', 'log_loss', 'entropy']
-# max_features = [1, 'sqrt', 'log2']
-# max_depths = [None, 2, 3, 4, 5]
-# for n, f, d, c in product(n_estimators, max_features, max_depths, criterion): # with product we can iterate through all possible combinations
-#     rf = RandomForestClassifier(n_estimators=n, criterion=c, max_features=f, max_depth=d, n_jobs=2, random_state=1337)
+# # max_features = [1, 'sqrt', 'log2']
+# accuracys = []
+# max_depths = [2, 5, None]
+# for n, d, c in product(n_estimators, max_depths, criterion): # with product we can iterate through all possible combinations
+#     rf = RandomForestClassifier(n_estimators=n, criterion=c, max_depth=d)
 #     rf.fit(rf_train, train_label)
 #     prediction_test = rf.predict(X=rf_test)
-#     print('Classification accuracy on test set with max features = {} and max_depth = {}: {:.3f}'.format(f, d, accuracy_score(test_label,prediction_test)))
-#     # cm = confusion_matrix(test_label, prediction_test)
-#     # cm_norm = cm/cm.sum(axis=1)[:, np.newaxis]
+#     accuracys.append(accuracy_score(test_label,prediction_test))
+#     print("Model with n_estimator = {}\tcriterion = '{}'\tdepth = {}\taccuracy = {:.3f}".format(n, c, d, accuracys[-1]))
+#     cm = confusion_matrix(test_label, prediction_test)
+#     cm_norm = cm/cm.sum(axis=1)[:, np.newaxis]
 #     # plt.figure()
-#     # plot_confusion_matrix(cm_norm, classes=rf.classes_, title='Confusion matrix accuracy on test set with max features = {} and max_depth = {}: {:.3f}'.format(f, d, accuracy_score(test_label,prediction_test)))
+#     # plot_confusion_matrix(cm_norm, classes=rf.classes_)
+# print(accuracys)
 
-# # drawing tree
-# from sklearn import tree
-# for tree_in_forest in rf_model.estimators_:
-#     tree.plot_tree(tree_in_forest)
-#     plt.show()
+# drawing tree
+from sklearn import tree
+for tree_in_forest in rf_model.estimators_:
+    tree.plot_tree(tree_in_forest, fontsize=32, max_depth=1)
+    plt.show()

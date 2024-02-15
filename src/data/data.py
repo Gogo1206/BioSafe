@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import random
 
 files = glob.glob('tmp\\data\\*.csv')
-labels = ["gogo"]
+labels = ["user"]
 start = [[],[],[],[],[],[],[],[]]
 end = [[],[],[],[],[],[],[],[]]
 with open("tmp/data/others.csv", 'w', newline='') as csvfile:
@@ -24,8 +24,8 @@ with open("tmp/data/others.csv", 'w', newline='') as csvfile:
                 for index in range(len(row)):
                     x[index].append(eval(row[index]))
                 # plt.plot([1,2,3,4],[eval(row[i]) for i in range(4)], linestyle='dashed')
-        q1 = np.percentile(x, 10, axis=1)
-        q3 = np.percentile(x, 90, axis=1)
+        q1 = np.percentile(x, 20, axis=1)
+        q3 = np.percentile(x, 80, axis=1)
         # plt.plot([1,2,3,4],[q1[i] for i in range(4)], color='black')
         # plt.plot([1,2,3,4],[q3[i] for i in range(4)], color='black')
         # plt.show()
