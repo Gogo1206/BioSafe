@@ -81,6 +81,7 @@ def on_press(key):
                     break
                 entry.delete(i,i+1)
         enter_predict([0,0,0,0],[0,0,0,0])
+        entry.config(show='*')
         return
     if(key==keyboard.Key.backspace):
         x.clear()
