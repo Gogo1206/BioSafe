@@ -7,7 +7,6 @@ start = time.time()
 pressed = {}
 press = [[]]
 held = [[]]
-password = []
 def on_press(key):
     if(key==keyboard.Key.esc):
         return False
@@ -15,7 +14,6 @@ def on_press(key):
         pressed[key] = 0
 
     if pressed[key]==0: # Same logic
-        if(len(password)!=4):password.append(key-3)
         pressed[key] = time.time()
         print('Key %s pressed at ' % key, time.time()) 
         press.append([time.time()-start]) if len(press[len(press)-1])==4 else press[len(press)-1].append(time.time()-start)
@@ -47,7 +45,7 @@ with open("tmp/press.csv", 'w', newline='') as csvfile:
     #         row.append((j-press[i][0])/(press[i][3]-press[i][0]))
     #     writer.writerow(reversed(row))
 
-    #not normalized08050805
+    #not normalized
     for i in range(len(press)):
         if(len(press[i])!=4):break
         row = []
@@ -57,4 +55,3 @@ with open("tmp/press.csv", 'w', newline='') as csvfile:
         for j in held[i]:
             row.append(j)
         writer.writerow(row)
-    print(password[0])

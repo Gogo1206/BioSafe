@@ -1,3 +1,4 @@
+from tkinter import *
 from pynput import keyboard
 import time
 import csv
@@ -36,6 +37,22 @@ prediction_test = rf_model.predict(X=rf_test)
 print("Training Accuracy is: ", rf_model.score(rf_train, train_label))
 print("Testing Accuracy is: ", rf_model.score(rf_test, test_label))
 
+window = Tk()
+window.geometry("600x400")
+window.grid_rowconfigure(0, weight=1)
+window.grid_rowconfigure(4, weight=1)
+window.grid_columnconfigure(0, weight=1)
+window.grid_columnconfigure(1, weight=2)
+window.grid_columnconfigure(2, weight=1)
+pass_var = StringVar()
+hint_label = Label(window, text = "Please Enter Your Password:", font=('calibre',20, 'bold'))
+entry = Entry(window, textvariable = pass_var, font=('calibre',20,'normal'), show='*')
+text_label = Label(window, text = "Model accuracy of {:.3f}".format(rf_model.score(rf_test, test_label)), font=('calibre',20,'normal'))
+empty = Label(window,text="")
+hint_label.grid(row=1,column=1)
+entry.grid(row=2,column=1)
+text_label.grid(row=3,column=1)
+empty.grid(row=4, column=2)
 
 start = time.time()
 pressed = {}
@@ -53,18 +70,29 @@ def enter_predict(x, y):
     for i in y:
         row.append(i)
     prediction = rf_model.predict(X=[row])
-    print(labels[prediction[0]],"detected")
+    text_label.config(text=labels[prediction[0]]+" detected")
+    entry.delete(0, END)
+    # print(labels[prediction[0]],"detected")
 
 def on_press(key): 
+    if len(x)==4:
+        return
     if(key==keyboard.Key.enter):
-        print("AI Hacking")
-        for i in range(50):
-            print('\''+str(random.randint(0,9))+'\'', end=' ')
-        print()
-        for i in password:
-            print(i,end='')
-        print()
+        text_label.config(text='AI Hacking')
+        entry.config(show='')
+        for i in range(4):
+            for n in range(0,9):
+                entry.insert(i,n)
+                time.sleep(0.1)
+                if(n==password[i]):
+                    break
+                entry.delete(i,i+1)
         enter_predict([0,0,0,0],[0,0,0,0])
+        return
+    if(key==keyboard.Key.backspace):
+        x.clear()
+        entry.delete(0,END)
+        return
     if key not in pressed:
         pressed[key] = 0
     
@@ -74,6 +102,14 @@ def on_press(key):
 
 
 def on_release(key):
+    if len(y)==4:
+        return
+    if(key==keyboard.Key.enter):
+        return
+    if(key==keyboard.Key.backspace):
+        y.clear()
+        entry.delete(0,END)
+        return
     y.append(time.time()-pressed[key])
     pressed[key] = 0
     if len(y)==4:
@@ -81,7 +117,7 @@ def on_release(key):
         x.clear()
         y.clear()
 
-print("Try login with your 4 digit PIN:")
+
 listener = keyboard.Listener(on_press=on_press, on_release=on_release)
 listener.start()
-listener.join()
+window.mainloop()

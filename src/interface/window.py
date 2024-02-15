@@ -9,8 +9,8 @@ root=tk.Tk()
 # setting the windows size
 root.geometry("600x400")
 
-root.grid_rowconfigure(3, weight=1)
-root.grid_columnconfigure(3, weight=1)
+root.grid_rowconfigure(0, weight=1)
+root.grid_columnconfigure(0, weight=1)
   
 # declaring string variable
 # for storing name and password
