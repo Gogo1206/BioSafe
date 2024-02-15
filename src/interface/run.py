@@ -2,16 +2,10 @@ from tkinter import *
 from pynput import keyboard
 import time
 import csv
-import numpy as np
 import glob
-import pandas as pd
-import matplotlib.pyplot as plt
-import random
 
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-import seaborn as sns
-from sklearn.metrics import accuracy_score, confusion_matrix, r2_score
 files = glob.glob('tmp\\data\\*.csv')
 labels = []
 x = []
@@ -72,7 +66,6 @@ def enter_predict(x, y):
     prediction = rf_model.predict(X=[row])
     text_label.config(text=labels[prediction[0]]+" detected")
     entry.delete(0, END)
-    # print(labels[prediction[0]],"detected")
 
 def on_press(key): 
     if len(x)==4:
