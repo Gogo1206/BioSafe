@@ -71,7 +71,7 @@ def on_press(key):
     if len(x)==4:
         return
     if(key==keyboard.Key.enter):
-        text_label.config(text='AI Hacking')
+        text_label.config(text='ai hacking')
         entry.config(show='')
         for i in range(4):
             for n in range(0,9):
