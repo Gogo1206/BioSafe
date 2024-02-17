@@ -21,7 +21,7 @@ import glob
 #     plt.show()
 
 files = glob.glob('tmp\\data\\*.csv')
-labels = ["user", "others","ai"]
+labels = ["user", "others"]
 for filename in files:
     if filename[9:-4] not in labels:continue
     with open(filename, newline='') as csvfile:

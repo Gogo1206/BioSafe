@@ -49,7 +49,7 @@ with open("tmp/data/others.csv", 'w', newline='') as csvfile:
             num1 = 0
             num2 = random.uniform(max(0,q1[1]-(q3[1]-q1[1])), q1[1]) if random.randint(0,1) == 1 else random.uniform(q3[1], q1[2])
             num3 = random.uniform(num2, q1[2]) if random.randint(0,1) == 1 else random.uniform(q3[2],q1[3])
-            num4 = random.uniform(num3, q1[3]) if random.randint(0,1) == 1 else random.uniform(q3[3],q3[3]+(q3[3]-q3[1]))
+            num4 = random.uniform(num3, q1[3]) if random.randint(0,1) == 1 else random.uniform(q3[3],q3[3]+(q3[3]-q1[3]))
             row = [num1, num2, num3, num4]
             # plt.plot([1,2,3,4],[q1[i] for i in range(4)], color='black')
             # plt.plot([1,2,3,4],[q3[i] for i in range(4)], color='black')

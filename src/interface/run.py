@@ -56,6 +56,7 @@ password = [1,2,0,6]
 counter = 0
 x = []
 y = []
+typed = []
 def enter_predict(x, y):
     row = []
     start = x[0]
@@ -63,8 +64,11 @@ def enter_predict(x, y):
         row.append(i-start)
     for i in y:
         row.append(i)
-    prediction = rf_model.predict(X=[row])
-    text_label.config(text=labels[prediction[0]]+" detected")
+    if(entry.get()=="1206"):
+        prediction = rf_model.predict(X=[row])
+        text_label.config(text=labels[prediction[0]]+" detected")
+    else:
+        text_label.config(text="wrong password")
     entry.delete(0, END)
 
 def on_press(key): 
