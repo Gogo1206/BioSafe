@@ -15,9 +15,9 @@ python src/interface/run.py
 
 ```
 ┌──────────────────┐     ┌───────────────────┐     ┌──────────────────┐
-│  Keystroke       │     │  Feature Vector    │     │  Random Forest   │
-│  Capture         │ ──► │  4 press intervals │ ──► │  Prediction      │
-│  (pynput)        │     │  + 4 hold delays   │     │  user/others/ai  │
+│  Keystroke       │     │  Feature Vector   │     │  Random Forest   │
+│  Capture         │ ──► │  4 press intervals│ ──► │  Prediction      │
+│  (pynput)        │     │  + 4 hold delays  │     │  user/others/ai  │
 └──────────────────┘     └───────────────────┘     └──────────────────┘
 ```
 
